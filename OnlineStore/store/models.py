@@ -16,6 +16,9 @@ class ItemTag(TagBase):
         verbose_name='Описание',
     )
 
+    def natural_key(self):
+        return (self.slug,)
+
     class Meta:
         verbose_name = _("Категория")
         verbose_name_plural = _("Категории")

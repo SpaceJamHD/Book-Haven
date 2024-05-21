@@ -1,0 +1,54 @@
+{% extends "base.html" %} 
+ 
+{% block content %} 
+{% load static %} 
+<h2>{{ item.title }}</h2> 
+<p>Товар належить до категорії 
+{% for tag in item.tags.all %} 
+    <b><a href="{% url 'store:tag_details' tag.slug %}">{{ tag }}</a></b> 
+    {% if not forloop.last %},{% endif %} 
+{% endfor %} 
+</p> 
+{% if item.image %} 
+    <p><span class="image left"><img src="{{ item.image.url }}" alt="" style="max-width: 200px; max-height: 200px;"/> 
+{% else %} 
+    <p><span class="image left"><img src="{% static 'images/pic14.jpg' %}" alt="" /> 
+{% endif %} 
+    <a href="{% url 'cart:add_to_cart' item_slug=item.slug %}" class="button small" style="margin-top:10px;"> 
+        Додати у кошик</a> 
+    </span> 
+    {{ item.description }}{{ item.description }}
+    <p>Средняя оценка: {{ average_rating|floatformat:1 }} из 5</p> 
+</p> 
+{% if item.old_price %} 
+    <p>Стара ціна: <s>{{ item.old_price }} гривень</s> 
+      Нова ціна: <b>{{ item.price }}</b> гривень </p> 
+{% else %} 
+    <p>Ціна: <b>{{ item.price }}</b> гривень </p> 
+{% endif %} 
+ 
+<h2>Коментарі:</h2>
+    <ul style="display: inline-block;">
+        {% for comment in comments %}
+            <div style="background-color: #444; max-width: max-content; border-radius: 20px; padding: 20px; color: aliceblue; margin: inherit;">
+                <p><strong>{{ comment.user.username }}</strong>: {{ comment.text }}</p>
+                <div class="detail_gr" style="display: flex; margin-top: -20px;">
+                <p>Оцінка: {{ comment.rating }} из 5</p>
+                <p style="margin-left: 20px;"><em>{{ comment.created_at }}</em></p>
+                </div>
+            </div>
+        {% empty %}
+        <li>Нажаль, коментарів ще немає.</li>
+        {% endfor %}
+</ul>
+        {% if user.is_authenticated %}
+            <form method="post" style="margin: 0 0 2em 0; overflow-x: hidden; background: #444; padding: 20px 0 0 20px; border-radius: 20px; color: aliceblue;">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" style="margin-bottom: 20px;">Залишити коментарій</button>
+            </form>
+        {% else %}
+            <p>Будь ласка, <a href="{% url 'users:login' %}?v=1.0">Увійдіть</a>, щоб залишити коментарій</p>
+        {% endif %}
+ 
+{% endblock %}

@@ -1,0 +1,41 @@
+{% load static %}
+<header id="header">
+    <div class="inner">
+        <!-- Logo -->
+        <a href="{% url 'store:home' %}" class="logo">
+            <span class="symbol"><img src="{% static 'images/logo.svg' %}?v=1.0" alt="" /></span><span
+                class="title">Book Haven</span>
+        </a>
+        <!-- Nav -->
+        <nav>
+            <ul>
+                <li><a href="#menu">Меню</a></li>
+            </ul>
+            <br>
+            <ul class="actions">
+                <li>
+                    <a href="{% url 'cart:cart' %}">
+                        <img src="{% static 'images/cart.png' %}?v=1.0" width="40" height="40"></a>
+                    <br>
+                    <a href="{% url 'users:profile' %}">
+                        <img src="{% static 'images/profile-removebg-preview.png' %}?v=1.0" width="40" height="40"></a>
+                    <br>
+                    {% if request.user.is_staff %}
+                    <a href="{% url 'admin_panel' %}">
+                        <img src="{% static 'images/settings.png' %}?v=1.0" width="40" height="40">
+                    </a>
+                    {% endif %}
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<!-- Menu -->
+<nav id="menu">
+    <h2>Меню</h2>
+    <ul>
+        <li><a href="{% url 'store:tag_list' %}">Всі категорії</a></li>
+        <li><a href="{% url 'about:about_project' %}">О сайті</a></li>
+        <li><a href="{% url 'about:about_me' %}">О нас</a></li>
+    </ul>
+</nav>

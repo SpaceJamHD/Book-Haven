@@ -1,0 +1,35 @@
+<footer id="footer">
+    <div class="inner">
+        <section>
+            <h2>Залишились питання? Зв'яжіться з нами</h2>
+            <form style="width: 100%;" method="post" action="{% url 'users:feedback_processing'%}?v=1.0">
+                {% csrf_token %}
+                <div class="fields">
+                    <div class="field half">
+                        <input type="text" name="feedback_name" id="feedback_name" placeholder="Ім'я" />
+                    </div>
+                    <div class="field half">
+                        <input type="email" name="feedback_email" id="feedback_email" placeholder="Пошта" />
+                    </div>
+                    <div class="field">
+                        <textarea name="feedback_message" id="feedback_message" placeholder="Повідомлення"></textarea>
+                    </div>
+                </div>
+                <ul class="actions">
+                    <li><input type="submit" value="Відправити" class="primary" /></li>
+                </ul>
+            </form>
+        </section>
+        <section>
+            <h2>Мої ресурси</h2>
+            <ul class="icons">
+                <li><a href="https://github.com/dagedarr" class="icon brands style2 fa-github"><span
+                            class="label">GitHub</span></a></li>
+                <li><a href="https://t.me/nilotan" class="icon solid style2 fa-phone"><span
+                            class="label">Telegram</span></a></li>
+                <li><a href="mailto:arnat64@mail.ru" class="icon solid style2 fa-envelope"><span
+                            class="label">Email</span></a></li>
+            </ul>
+        </section>
+    </div>
+</footer>

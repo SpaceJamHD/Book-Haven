@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/profile.css'%}?v=1.0" />
+{% endblock %}
+
+{% block content %}
+<h1>Ваші замовлення</h1>
+{% if orders %}
+{% for order in orders %}
+<div class="order-wrapper">
+  <div class="order-header">
+    <p>Адреса: {{ order.shipping_address }}</p>
+    <p><strong>Статус замовлення: {{ order.get_status_display }}</strong></p>
+  </div>
+  <div class="table-wrapper">
+    <table class="alt">
+      <thead>
+        <tr>
+          <th>Назва</th>
+          <th>Кількість</th>
+          <th>Ціна</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for order_item in order.items.all %}
+        <tr>
+          <td>{{ order_item.item.title }}</td>
+          <td>
+            {{ order_item.quantity }}
+          </td>
+          <td>{{ order_item.total_price }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="2"></td>
+          <td><b>{{ order.total_price }}</b></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+{% if not forloop.last %}
+<hr>{% endif %}
+{% endfor %}
+{% else %}
+<p>У вас немає замовлення.</p>
+{% endif %}
+{% endblock %}

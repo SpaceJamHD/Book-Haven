@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Ваш профіль</h1>
+<p>Вітаємо, {{ request.user.get_username }}. У вас всього <strong>{{ request.user.orders.count }}</strong> замовлень.
+</p>
+
+<div class="flex">
+  <form method="post" action="{% url 'users:user_orders' %}">
+    {% csrf_token %}
+    <button type="submit">Перейти до замовлень</button>
+  </form>
+  <form method="post" action="{% url 'users:password_change' %}">
+    {% csrf_token %}
+    <button type="submit">Змінити пароль</button>
+  </form>
+  <form method="post" action="{% url 'users:logout' %}">
+    {% csrf_token %}
+    <button type="submit">Вийти</button>
+  </form>
+</div>
+{% endblock %}

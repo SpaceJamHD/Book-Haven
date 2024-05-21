@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'images/logo.svg' %}?v=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/main.css' %}?v=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
+    <noscript>
+        <link rel="stylesheet" type="text/css" href="{% static 'assets/css/noscript.css'%}?v=1.0" />
+    </noscript>
+    <link rel="stylesheet" href="../../static/assets/css/recom.css" />
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <title>Document</title>
+    {% block css %}
+    {% endblock %}
+
+    <style>
+        .autocomplete-items {
+            border: 1px solid #d4d4d4;
+            border-bottom: none;
+            border-top: none;
+            z-index: 99;
+            position: absolute;
+            background-color: white;
+        }
+
+        .autocomplete-items div {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #fff;
+            border-bottom: 1px solid #d4d4d4;
+        }
+
+        .autocomplete-items div:hover {
+            background-color: #e9e9e9;
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+    <div class="preloader">
+        <img src="../../static/images/Loader.gif" alt="preloader" class="preloader__item" />
+    </div>
+    <header class="header">
+        <video class="video-container" muted autoplay loop>
+            <source src="../../static/images/video.mp4" type="video/mp4" />
+        </video>
+        <h1>Book Haven</h1>
+        <h3 style="    margin-top: -207px;
+        width: 42%;
+        text-align: center;
+        font-weight: normal;">Ласкаво просимо,до світу історій, де кожна
+            сторінка - це
+            нова пригода, кожне слово
+            - ключ до чарівності.
+        </h3>
+        <button class="butt"><a href="{% url 'store:store' %}">Перейти до усіх книг</a></button>
+        <button class="switch-btn">
+            <span>
+                +
+            </span>
+            <span>
+                -
+            </span>
+            <span class="switch"></span>
+        </button>
+    </header>
+
+
+    <form id="search-form" method="get" action="{% url 'store:home' %}">
+        {{ form.query }}
+        <button style="    margin-top: 62px;
+        width: 48%;
+        margin-left: 64px;" type="submit">Пошук</button>
+    </form>
+    <div id="autocomplete-list" class="autocomplete-items"></div>
+    <ul id="search-results">
+        {% for item in items %}
+        <li><a href="{% url 'store:item_details' item_slug=item.slug %}">{{ item.title }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <div class="recomm_wrapper">
+        <h1 style="text-align: center; color: #292929;">Рекомендовані книги</h1>
+    </div>
+    <div class="carousel-container">
+        <div class="cards-wrapper">
+            <div class="cards">
+                {% if recommended_items %}
+                {% for item in recommended_items %}
+                <div class="card">
+                    <h2><a href="{% url 'store:item_details' item.slug %}">{{ item.title }}</a></h2>
+                    {% if item.image %}
+                    <p class="card_img" style="width: 226px;"><img src="{{ item.image.url }}" alt=""
+                            style="max-width: 160px; max-height: 200px;" /></p>
+                    {% else %}
+                    <p><img src="{% static 'media/items/1.jpg' %}" alt="" /></p>
+                    {% endif %}
+                    <p
+                        style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-weight: 700; font-size: 24px; text-align: center;">
+                        Оцінка: {{ item.computed_average_rating|floatformat:1 }} из 5
+                    </p>
+                </div>
+                {% endfor %}
+                {% else %}
+                <p>Немає рекомендованих книг</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="arrow_bt" style="display: flex; margin: 0 0 0 680px">
+            <div class="button-prev">
+                <span class="material-symbols-outlined">
+                    arrow_back_ios
+                </span>
+            </div>
+
+            <div class="button-next">
+                <span class="material-symbols-outlined">
+                    arrow_forward_ios
+                </span>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <main>
+        <section class="container">
+            <!-- title -->
+            <div class="title">
+                <h2>Наші письменники</h2>
+                <div class="underline"></div>
+            </div>
+            <!-- review -->
+            <article class="review">
+                <div class="img-container">
+                    <img src="media/items/20.webp" id="person-img" alt="" />
+                </div>
+                <h4 id="author">Євгеній Казан</h4>
+                <p id="job">Митець</p>
+                <p id="info">
+                    Легенда стверджує, що Ілля покинув світ буденності, та вирушив у ліси, щоб знайти натхнення у
+                    самотності й гармонії з природою. Його твори, повні мудрості та філософії, надихали людей
+                    протягом
+                    багатьох поколінь.
+                </p>
+                <!-- prev next buttons-->
+                <div class="button-container">
+                    <button class="prev-btn">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="next-btn">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                <!-- random button -->
+                <button class="random-btn" style="margin-top: 20px;">Здивуй мене</button>
+            </article>
+        </section>
+    </main>
+    <div id="wrapper">
+        <!-- Header -->
+        {% include 'includes/header.html' %}
+        <!-- Main -->
+        {% include 'includes/footer.html' %}
+    </div>
+    <!-- Footer -->
+
+
+    <script src="../../static/assets/js/recom.js"></script>
+    <!-- Scripts -->
+    <script src={% static "assets/js/jquery.min.js" %}></script>
+    <script src={% static "assets/js/browser.min.js" %}></script>
+    <script src={% static "assets/js/breakpoints.min.js" %}></script>
+    <script src={% static "assets/js/util.js" %}></script>
+    <script src={% static "assets/js/main.js" %}></script>
+    {% block js %}
+    {% endblock %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const buttonNext = document.querySelector('.button-next');
+            const buttonPrev = document.querySelector('.button-prev');
+            const cards = document.querySelector('.cards');
+            const cardWidth = document.querySelector('.card').offsetWidth;
+            const scrollStep = 100; // Шаг прокрутки
+
+            let currentPosition = 0;
+            const maxPosition = 0; // Максимальное положение карточек
+
+            buttonNext.addEventListener('click', function () {
+                const maxScrollPosition = -(cards.scrollWidth - cards.offsetWidth);
+                if (currentPosition > maxScrollPosition + scrollStep) {
+                    currentPosition -= scrollStep;
+                    moveCards();
+                }
+            });
+
+            buttonPrev.addEventListener('click', function () {
+                if (currentPosition < maxPosition) {
+                    currentPosition += scrollStep;
+                    moveCards();
+                }
+            });
+
+            function moveCards() {
+                cards.style.transition = 'transform 0.5s ease';
+                cards.style.transform = `translateX(${currentPosition}px)`;
+            }
+        });
+
+
+
+        const reviews = [
+            {
+                id: 1,
+                name: "Євгеній Казан",
+                job: "Письменник",
+                img: "../media/items/222.jpg",
+                text: "Одна з найвідоміших теорій про Євгена стверджує, що він був самоучкою письменником, який жив у глибоких лісах, подалі від цивілізації. Його твори були написані на листях дерев або вирізані на корі, а потім поширювалися за допомогою усної народної творчості.",
+            },
+            {
+                id: 2,
+                name: "Ілля Федяєв",
+                job: "Письменник",
+                img: "../../media/items/11.webp",
+                text: "Легенда стверджує, що Ілля покинув світ буденності, та вирушив у ліси, щоб знайти натхнення у самотності й гармонії з природою. Його твори, повні мудрості та філософії, надихали людей протягом багатьох поколінь.",
+            },
+            {
+                id: 3,
+                name: "Іван Авраменко",
+                job: "Письменник",
+                img: "../../media/items/17.webp",
+                text: "Загадкова постать, що оточена легендами та міфами й до цього дня. Дехто стверджує, що він був великим українським письменником,",
+            },
+        ];
+        // select items
+        const img = document.getElementById("person-img");
+        const author = document.getElementById("author");
+        const job = document.getElementById("job");
+        const info = document.getElementById("info");
+
+        const prevBtn = document.querySelector(".prev-btn");
+        const nextBtn = document.querySelector(".next-btn");
+        const randomBtn = document.querySelector(".random-btn");
+
+        // set starting item
+        let currentItem = 0;
+
+        // load initial item
+        window.addEventListener("DOMContentLoaded", function () {
+            const item = reviews[currentItem];
+            img.src = item.img;
+            author.textContent = item.name;
+            job.textContent = item.job;
+            info.textContent = item.text;
+        });
+
+        // show person based on item
+        function showPerson(person) {
+            const item = reviews[person];
+            img.src = item.img;
+            author.textContent = item.name;
+            job.textContent = item.job;
+            info.textContent = item.text;
+        }
+        // show next person
+        nextBtn.addEventListener("click", function () {
+            currentItem++;
+            if (currentItem > reviews.length - 1) {
+                currentItem = 0;
+            }
+            showPerson(currentItem);
+        });
+        // show prev person
+        prevBtn.addEventListener("click", function () {
+            currentItem--;
+            if (currentItem < 0) {
+                currentItem = reviews.length - 1;
+            }
+            showPerson(currentItem);
+        });
+        // show random person
+        randomBtn.addEventListener("click", function () {
+            console.log("hello");
+
+            currentItem = Math.floor(Math.random() * reviews.length);
+            showPerson(currentItem);
+        });
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchForm = document.getElementById('search-form');
+            const queryInput = searchForm.querySelector('input[name="query"]');
+            const autocompleteList = document.getElementById('autocomplete-list');
+
+            queryInput.addEventListener('input', function () {
+                const query = this.value;
+                if (query.length < 3) {
+                    autocompleteList.innerHTML = '';
+                    return;
+                }
+                fetch(`${searchForm.action}?query=${query}`)
+                    .then(response => response.text())
+                    .then(html => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+                        const items = doc.querySelectorAll('#search-results li');
+                        autocompleteList.innerHTML = '';
+                        items.forEach(item => {
+                            const div = document.createElement('div');
+                            div.innerHTML = item.innerHTML;
+                            div.addEventListener('click', function () {
+                                window.location.href = item.querySelector('a').href;
+                            });
+                            autocompleteList.appendChild(div);
+                        });
+                    });
+            });
+        });
+
+    </script>
+
+</body>
+
+</html>

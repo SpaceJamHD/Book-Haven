@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Дякуємо за замовлення!</h2>
+<p><strong>Зміст замовлення:</strong>
+  {% for item in order.items.all %}
+  <li>{{ item.quantity }} х {{ item.item.title }}</li>
+  {% endfor %}
+  <br>
+<p>На суму <b>{{ order.total_price }}</b> гривень.</p>
+</p>
+<p><strong>Адреса доставки:</strong></p>
+<p>{{ order.shipping_address }}</p>
+<div>
+  <a href="{% url 'users:user_orders' %}" class="button">Мої замовлення</a>
+</div>
+{% endblock %}

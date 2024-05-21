@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+<h2>Список усіх категорії</h2>
+<hr>
+{% for tag in page_obj %}
+<a href="{% url 'store:tag_details' tag.slug %}"><b>{{ tag.name }}</b></a>
+<p><span class="image right">
+        {% if tag.image %}
+        <img src="{{ tag.image.url }}" alt="" style="width: 200px; height: 200px;" />
+        {% else %}
+        <img src="{% static 'images/pic14.jpg' %}?v=1.0" alt="" />
+        {% endif %}
+    </span>{{tag.description}}{{tag.description}}</p>
+{% if not forloop.last %}
+<hr>{% endif %}
+{% endfor %}
+{% endblock %}

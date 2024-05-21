@@ -31,7 +31,7 @@ StoreProject - это веб-приложение для управления о
 1. Перейдите в директорию проекта:
 
    ```sh
-   cd путь\к\проекту\StoreProject-main
+   cd путь\к\проекту\Book-Haven-branch_desc
    ```
 
 2. Создайте виртуальное окружение:
@@ -100,7 +100,7 @@ StoreProject - это веб-приложение для управления о
 11. Загрузите начальные данные:
 
     ```sh
-    python manage.py loaddata data.json
+    python manage.py load_custom_data
     ```
 
 12. Создайте суперпользователя:
@@ -173,7 +173,7 @@ StoreProject is a web application for managing an online bookstore, built with D
 1. Navigate to the project directory:
 
    ```sh
-   cd path\to\project\StoreProject-main
+   cd path\to\project\Book-Haven-branch_desc
    ```
 
 2. Create a virtual environment:
@@ -244,7 +244,7 @@ StoreProject is a web application for managing an online bookstore, built with D
 11. Load initial data:
 
     ```sh
-    python manage.py loaddata data.json
+    python manage.py load_custom_data
     ```
 
 12. Create a superuser:
